@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   mysql:
     image: mysql:latest
@@ -15,7 +13,7 @@ services:
       - ./mySql/init.sql:/docker-entrypoint-initdb.d/init.sql # Bind the init.sql file to the container
     networks:
       - my_custom_network  # Attach the custom network
-  
+
   app:
     build: 
       context: ./appserver/
@@ -24,6 +22,7 @@ services:
       - "8080:3000"
     volumes:
       - ./appserver:/usr/src/appserver
+      - /usr/src/appserver/node_modules # Prevents overwriting the container's node_modules
     depends_on:
       - mysql
     networks:
