@@ -18,8 +18,8 @@ services:
     build: 
       context: ./appserver/
       dockerfile: Dockerfile
-    ports:
-      - "8080:3000"
+    # ports:
+    #   - "8080:3000"
     volumes:
       - ./appserver:/usr/src/appserver
       - /usr/src/appserver/node_modules # Prevents overwriting the container's node_modules
@@ -27,7 +27,16 @@ services:
       - mysql
     networks:
       - my_custom_network  # Attach the custom network
+  
 
+  web:
+    build:
+      context: ./webserver/
+      dockerfile: Dockerfile
+    ports: 
+      - "443:8080"
+    networks:
+      - networkName
 
 volumes:
   data:
