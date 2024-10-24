@@ -19,7 +19,7 @@ const routes: Routes = [
     children: [
       { path: 'profile', component: ProfileComponent },
       { path: 'resume', component: ResumeComponent },
-      { path: 'cat-picture', component: CatPictureComponent },
+      { path: 'cat', component: CatPictureComponent },
       { path: 'achievement', component: AchievementComponent },
       { path: '', redirectTo: 'profile', pathMatch: 'full' } // Redirect to 'profile' by default
     ]

@@ -16,7 +16,7 @@ export class UserComponent {
   onTabChange(index: number): void {
     this.selectedTab = index;
 
-    const routes = ['profile', 'resume', 'cat-picture', 'achievement'];
+    const routes = ['profile', 'resume', 'cat', 'achievement'];
     const route = routes[index];
 
     if (route) {
