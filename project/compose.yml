@@ -6,6 +6,7 @@ services:
       MYSQL_DATABASE: onlinestore
       MYSQL_USER: appuser
       MYSQL_PASSWORD: apppassword
+    container_name: mysqlserver
     # ports:             # Remove the port mapping to ensure the container is only accessible from the custom network
     #   - "3306:3306"     
     volumes:
@@ -20,6 +21,7 @@ services:
       dockerfile: Dockerfile
     # ports:
     #   - "8080:3000"
+    container_name: appserver
     volumes:
       - ./appserver:/usr/src/appserver
       - /usr/src/appserver/node_modules # Prevents overwriting the container's node_modules
@@ -33,10 +35,11 @@ services:
     build:
       context: ./webserver/
       dockerfile: Dockerfile
+    container_name: webserver
     ports: 
       - "443:8080"
     networks:
-      - networkName
+      - my_custom_network
 
 volumes:
   data:

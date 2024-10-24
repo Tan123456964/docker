@@ -2,7 +2,7 @@ import { createConnection } from 'mysql';
 
 // Create a connection to the MySQL database
 const connection = createConnection({
-    host: 'mysql', // Use the service name defined in Docker Compose
+    host: 'mysqlserver', // Use the service name defined in Docker Compose
     user: 'appuser', // MySQL user
     password: 'apppassword', // MySQL password
     database: 'onlinestore' // MySQL database name

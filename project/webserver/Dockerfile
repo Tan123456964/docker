@@ -10,7 +10,7 @@ RUN apk add --no-cache openssl
 COPY . .
 
 # Install Angular dependencies
-RUN npm install
+RUN npm ci
 
 # Build the Angular app for production
 RUN npm run build --prod
@@ -22,6 +22,7 @@ RUN mkdir -p /etc/nginx/ssl \
        -out /etc/nginx/ssl/nginx.crt \
        -subj "/CN=localhost"
 
+
 # Second stage: Use NGINX to serve the Angular app with SSL
 FROM nginx:alpine
 
@@ -32,9 +33,10 @@ COPY --from=build /usr/src/webserver/dist/webserver /usr/share/nginx/html
 COPY --from=build /etc/nginx/ssl /etc/nginx/ssl
 
 # Copy your custom NGINX configuration (if needed)
-COPY ./nginx.conf /etc/nginx/nginx.conf
+COPY --from=build /usr/src/webserver/nginx/conf/nginx.conf /etc/nginx/nginx.conf
 
-# Expose port 443 for HTTPS
+# Expose port 8080 for HTTPS
 EXPOSE 8080
 
 CMD ["nginx", "-g", "daemon off;"]
+
