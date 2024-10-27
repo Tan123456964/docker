@@ -1,0 +1,8 @@
+mat-card {
+    padding: 16px; /* Adjust the padding as needed */
+  }
+
+  .resume-card {
+    margin-bottom: 16px; /* Adds space between each card */
+    padding: 16px; /* Adds padding inside each achievement card */
+  }

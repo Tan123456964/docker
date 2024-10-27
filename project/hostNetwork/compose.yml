@@ -1,0 +1,14 @@
+services:
+  hostweb1:
+    image: nginx:latest
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - NGINX_PORT=5550 # Example, if using a custom NGINX configuration
+
+  hostweb2:
+    image: nginx:latest
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - NGINX_PORT=5550 # Example, if using a custom NGINX configuration

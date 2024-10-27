@@ -1,15 +1,18 @@
 <mat-tab-group (selectedIndexChange)="onTabChange($event)">
-    <mat-tab label="Profile">
-      <app-profile></app-profile>
-    </mat-tab>
-    <mat-tab label="Resume">
-      <app-resume></app-resume>
-    </mat-tab>
-    <mat-tab label="Cat Picture">
-      <app-cat-picture></app-cat-picture>
-    </mat-tab>
-    <mat-tab label="Achievement">
-      <app-achievement></app-achievement>
-    </mat-tab>
+  <mat-tab label="Profile">
+    <ng-template matTabContent> <app-profile></app-profile> </ng-template>
+  </mat-tab>
+  <mat-tab label="Resume">
+    <ng-template matTabContent> <app-resume></app-resume> </ng-template>  
+  </mat-tab>
+  <mat-tab label="Cat Picture">
+    <ng-template matTabContent> <app-cat-picture></app-cat-picture> </ng-template>
+  </mat-tab>
+  <mat-tab label="Achievement">
+    <ng-template matTabContent> <app-achievement></app-achievement> </ng-template>
+  </mat-tab>
 </mat-tab-group>
+
+
+
   

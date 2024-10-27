@@ -1,21 +1,14 @@
-import { createConnection } from 'mysql';
+const mysql = require('mysql2');
 
-// Create a connection to the MySQL database
-const connection = createConnection({
-    host: 'mysqlserver', // Use the service name defined in Docker Compose
-    user: 'appuser', // MySQL user
-    password: 'apppassword', // MySQL password
-    database: 'onlinestore' // MySQL database name
+const pool = mysql.createPool({
+    host: 'mysql',
+    user: 'appuser',
+    password: 'apppassword',
+    database: 'onlinestore',
+    port: 3306,
+    waitForConnections: true,
+    connectionLimit: 4, // Maximum number of connections in the pool
+    queueLimit: 0 // Unlimited queue limit for pending requests
 });
 
-// Connect to the MySQL database
-connection.connect(err => {
-    if (err) {
-        console.error('Error connecting to MySQL:', err);
-        return;
-    }
-    console.log('Connected to MySQL database');
-});
-
-// Export the connection for use in other modules
-export default connection;
+module.exports = pool.promise(); // Use promise-based for async/await support

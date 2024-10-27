@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { Router, ActivatedRoute } from '@angular/router';
 
 
@@ -7,17 +7,22 @@ import { Router, ActivatedRoute } from '@angular/router';
   templateUrl: './user.component.html',
   styleUrls:[ './user.component.css']
 })
-export class UserComponent {
+export class UserComponent implements OnInit {
 
   selectedTab: number = 0;
+  tabs = ['profile', 'resume', 'cat', 'achievement'];
 
   constructor(private router: Router, private route: ActivatedRoute) { }
 
+
+  ngOnInit(): void {
+    //TODO: page refrech should load content of the current tab, not default tab (profile)
+  }
+
+  
   onTabChange(index: number): void {
     this.selectedTab = index;
-
-    const routes = ['profile', 'resume', 'cat', 'achievement'];
-    const route = routes[index];
+    const route = this.tabs[this.selectedTab];
 
     if (route) {
       this.router.navigate([route], { relativeTo: this.route });

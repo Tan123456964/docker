@@ -1,23 +1,57 @@
 const express = require('express');
+const pool = require('./sqldb');
+
 const app = express();
 const PORT = 3000;
 
-
-// Sample route
-app.get('/', (req, res) => {
-    res.send('Hello, World!');
+// API for fetching cat pictures
+app.get('/api/cat', async (req, res) => {
+    const query = 'SELECT * FROM cat';
+    try {
+        const [results] = await pool.query(query);
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching cat data:', error);
+        res.status(500).send('Server error');
+    }
 });
 
-// Get a greeting
-app.get('/greet', (req, res) => {
-    res.send('Hello, User!');
+// API for fetching profile info
+app.get('/api/profile', async (req, res) => {
+    const query = 'SELECT * FROM profile';
+    try {
+        const [results] = await pool.query(query);
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching profile data:', error);
+        res.status(500).send('Server error');
+    }
 });
 
-// Post example
-app.post('/data', (req, res) => {
-    console.log(req.body);
-    res.send('Data received!');
+// API for fetching resumes
+app.get('/api/resume', async (req, res) => {
+    const query = 'SELECT * FROM resume';
+    try {
+        const [results] = await pool.query(query);
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching resume data:', error);
+        res.status(500).send('Server error');
+    }
 });
+
+// API for fetching achievements
+app.get('/api/achievement', async (req, res) => {
+    const query = 'SELECT * FROM achievement';
+    try {
+        const [results] = await pool.query(query);
+        res.json(results);
+    } catch (error) {
+        console.error('Error fetching achievement data:', error);
+        res.status(500).send('Server error');
+    }
+});
+
 
 //////////
 // Start the server

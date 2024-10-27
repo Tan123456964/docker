@@ -10,12 +10,15 @@ import { CatPictureComponent } from './user/cat-picture/cat-picture.component';
 
 // Import external libraries
 import {MatTabsModule} from '@angular/material/tabs';
+import { MatCardModule } from '@angular/material/card';
+import {MatDividerModule} from '@angular/material/divider';
+
 import { RouterModule, Routes } from '@angular/router';
 
 const routes: Routes = [
   {
-    path: 'user', 
-    component: UserComponent, 
+    path: 'user',
+    component: UserComponent , 
     children: [
       { path: 'profile', component: ProfileComponent },
       { path: 'resume', component: ResumeComponent },
@@ -38,6 +41,8 @@ const routes: Routes = [
     MatTabsModule,
     RouterModule.forChild(routes),
     CommonModule,
+    MatCardModule,
+    MatDividerModule
   ],
   providers: [
     UserdataService

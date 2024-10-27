@@ -1,1 +1,28 @@
-<p>achievement works!</p>
+<mat-card *ngIf="achivement !== undefined; else noAchievements">
+    <mat-card-content>
+      <mat-card-title>Achievements</mat-card-title>
+      <mat-divider></mat-divider>
+      <div *ngFor="let item of achivement">
+        <mat-card class="achievement-card">
+          <mat-card-header>
+            <mat-card-title>{{ item.name }}</mat-card-title>
+          </mat-card-header>
+          <mat-card-content>
+            <p>Image is : {{ item.picture }} </p>
+          </mat-card-content>
+          <mat-card-footer>
+            <p>Created at: {{ item.created_at }}</p>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+  
+  <ng-template #noAchievements>
+    <mat-card>
+      <mat-card-content>
+        <p>No achievements found.</p>
+      </mat-card-content>
+    </mat-card>
+  </ng-template>
+  
