@@ -24,7 +24,8 @@ const routes: Routes = [
       { path: 'resume', component: ResumeComponent },
       { path: 'cat', component: CatPictureComponent },
       { path: 'achievement', component: AchievementComponent },
-      { path: '', redirectTo: 'profile', pathMatch: 'full' } // Redirect to 'profile' by default
+      { path: '', redirectTo: 'profile', pathMatch: 'full' }, // Redirect to 'profile' by default
+      { path: '**', redirectTo: 'profile' },  // <-- Catch-all route to handle unknown paths
     ]
   }
 ];
