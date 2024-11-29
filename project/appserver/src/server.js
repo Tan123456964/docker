@@ -2,7 +2,7 @@ const express = require('express');
 const pool = require('./sqldb');
 
 const app = express();
-const PORT = 8080;
+const PORT = 3000;
 
 // API for fetching cat pictures
 app.get('/api/cat', async (req, res) => {
