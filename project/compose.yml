@@ -1,3 +1,4 @@
+name: myapp
 services:
   mysql:
     image: mysql:latest
@@ -6,9 +7,7 @@ services:
       MYSQL_DATABASE: onlinestore
       MYSQL_USER: appuser
       MYSQL_PASSWORD: apppassword
-    container_name: mysqlserver
-    # ports:             # Remove the port mapping to ensure the container is only accessible from the custom network
-    #   - "3306:3306"     
+    container_name: mysqlserver  
     volumes:
       - data:/var/lib/mysql # Mount the volume to persist the data
       - ./mySql/init.sql:/docker-entrypoint-initdb.d/init.sql # Bind the init.sql file to the container
@@ -19,8 +18,6 @@ services:
     build: 
       context: ./appserver/
       dockerfile: Dockerfile
-    # ports:
-    #   - "8080:3000"
     container_name: appserver
     volumes:
       - ./appserver:/usr/src/appserver
@@ -30,7 +27,6 @@ services:
     networks:
       - my_custom_network  # Attach the custom network
   
-
   web:
     build:
       context: ./webserver/
