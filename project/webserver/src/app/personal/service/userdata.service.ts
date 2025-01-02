@@ -2,15 +2,43 @@ import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
+export class Content {
+  id: number | undefined = undefined;
+  name: string | undefined = undefined;
+  picture: string | undefined = undefined;
+  created_at: string | undefined = undefined;
+  version: string | undefined = undefined;
+  filename: string | undefined = undefined;
+
+  constructor(
+    id?: number,
+    name?: string,
+    picture?: string,
+    created_at?: string,
+    version?: string,
+    filename?:string
+  ) {
+    this.id = id;
+    this.name = name;
+    this.picture = picture;
+    this.created_at = created_at;
+    this.version = version;
+    this.filename = filename
+  }
+}
+
+
+
 @Injectable({
   providedIn: 'root'
 })
+
 export class UserdataService {
 
-  public profile = new BehaviorSubject<any>({})
-  public resume = new BehaviorSubject<any>({})
-  public cat = new BehaviorSubject<any>({})
-  public achievement = new BehaviorSubject<any>({})
+  public profile = new BehaviorSubject<Content[]>([])
+  public resume = new BehaviorSubject<Content[]>([])
+  public cat = new BehaviorSubject<Content[]>([])
+  public achievement = new BehaviorSubject<Content[]>([])
 
 
   constructor( private http:HttpClient) {
@@ -21,12 +49,12 @@ export class UserdataService {
    }
 
    private getCatPictures = () => {
-    this.http.get<any>('/api/cat').subscribe({
-      next: (val) => {
+    this.http.get<Content[]>('/api/cat').subscribe({
+      next: (val:Content[]) => {
         this.cat.next(val);
       },
       error: (err) => {
-        this.cat.next({});
+        this.cat.next([]);
         console.error('Error fetching data for cat API:', err);
       },
       complete: () => {
@@ -37,12 +65,12 @@ export class UserdataService {
 
 
   private getProfileInfo = () => {
-    this.http.get<any>('/api/profile').subscribe({
-      next: (val) => {
+    this.http.get<Content[]>('/api/profile').subscribe({
+      next: (val:Content[]) => {
         this.profile.next(val);
       },
       error: (err) => {
-        this.profile.next({});
+        this.profile.next([]);
         console.error('Error fetching data for profile API:', err);
       },
       complete: () => {
@@ -52,12 +80,12 @@ export class UserdataService {
   };
 
   private getResumes = () => {
-    this.http.get<any>('/api/resume').subscribe({
-      next: (val) => {
+    this.http.get<Content[]>('/api/resume').subscribe({
+      next: (val:Content[]) => {
         this.resume.next(val);
       },
       error: (err) => {
-        this.resume.next({});
+        this.resume.next([]);
         console.error('Error fetching data for resume API:', err);
       },
       complete: () => {
@@ -67,12 +95,12 @@ export class UserdataService {
   };
 
   private getAchievement = () =>{
-    this.http.get<any>('/api/achievement').subscribe({
-      next: (val)=>{
+    this.http.get<Content[]>('/api/achievement').subscribe({
+      next: (val:Content[])=>{
         this.achievement.next(val)
       },
       error: (err) =>{
-        this.achievement.next({})
+        this.achievement.next([])
         console.error('Error fetching data for achievement API:', err);
       },
       complete: ()=>{

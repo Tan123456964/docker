@@ -7,11 +7,10 @@ import { ProfileComponent } from './user/profile/profile.component';
 import { UserdataService } from './service/userdata.service';
 import { ResumeComponent } from './user/resume/resume.component';
 import { CatPictureComponent } from './user/cat-picture/cat-picture.component';
+import { TemplateComponent } from '../../template/template.component';
 
 // Import external libraries
 import {MatTabsModule} from '@angular/material/tabs';
-import { MatCardModule } from '@angular/material/card';
-import {MatDividerModule} from '@angular/material/divider';
 
 import { RouterModule, Routes } from '@angular/router';
 
@@ -36,14 +35,13 @@ const routes: Routes = [
     AchievementComponent, 
     ProfileComponent, 
     ResumeComponent, 
-    CatPictureComponent
+    CatPictureComponent,
   ],
   imports: [
     MatTabsModule,
     RouterModule.forChild(routes),
     CommonModule,
-    MatCardModule,
-    MatDividerModule
+    TemplateComponent
   ],
   providers: [
     UserdataService

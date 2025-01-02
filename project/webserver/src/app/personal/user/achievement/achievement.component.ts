@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserdataService } from '../../service/userdata.service';
+import { Content } from '../../service/userdata.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-achievement',
@@ -8,7 +10,8 @@ import { UserdataService } from '../../service/userdata.service';
 })
 export class AchievementComponent implements OnInit {
 
-  public achivement = undefined
+  public achivements: BehaviorSubject<Content[]> = new BehaviorSubject<Content[]>([]);
+  public contentType = "Achivement"
 
   constructor(private data:UserdataService){}
 
@@ -16,7 +19,7 @@ export class AchievementComponent implements OnInit {
   ngOnInit(): void {
     this.data.achievement.subscribe({
       next: (val)=>{
-        this.achivement = val
+        this.achivements.next(val)
       }
     })
   }

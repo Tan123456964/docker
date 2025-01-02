@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserdataService } from '../../service/userdata.service';
+import { Content } from '../../service/userdata.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-profile',
@@ -8,14 +10,15 @@ import { UserdataService } from '../../service/userdata.service';
 })
 export class ProfileComponent implements OnInit {
 
-  public profiles = undefined;
+  public profiles: BehaviorSubject<Content[]> = new BehaviorSubject<Content[]>([]);
+  public contentType = "Profiles"
 
   constructor(private data:UserdataService){}
 
   ngOnInit(): void {
     this.data.profile.subscribe({
       next: (val)=>{
-        this.profiles = val;
+        this.profiles.next(val);
       }
     })
   }

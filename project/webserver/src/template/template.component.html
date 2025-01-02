@@ -1,0 +1,30 @@
+<mat-card *ngIf="userData.length > 0">
+    <mat-card-content>
+      <mat-card-title>{{ contentType }}</mat-card-title>
+      <mat-divider></mat-divider>
+      <div *ngFor="let item of userData">
+        <mat-card class="profile-card">
+          <!-- Render header only if name is defined -->
+          <mat-card-header>
+            <mat-card-title *ngIf="item.name !== undefined">{{ item.name }}</mat-card-title>
+            <mat-card-title *ngIf="item.version !== undefined">{{ item.version }}</mat-card-title>
+          </mat-card-header>
+  
+          <!-- Render content only if picture is defined -->
+          <mat-card-content>
+            <p *ngIf="item.picture !== undefined" >Image is: {{ item.picture }}</p>
+            <p *ngIf="item.filename !== undefined">File Name : {{ item.filename }} </p>
+          </mat-card-content>
+  
+          <!-- Render footer only if created_at is defined -->
+          <mat-card-footer>
+            <p *ngIf="item.created_at !== undefined">Created at: {{ item.created_at }}</p>
+          </mat-card-footer>
+        </mat-card>
+      </div>
+    </mat-card-content>
+  </mat-card>
+
+
+  
+

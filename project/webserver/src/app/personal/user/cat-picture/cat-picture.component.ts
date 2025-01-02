@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { UserdataService } from '../../service/userdata.service';
+import { Content } from '../../service/userdata.service';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-cat-picture',
@@ -10,12 +12,13 @@ export class CatPictureComponent implements OnInit  {
 
   constructor(private data:UserdataService){}
 
-  public cats = undefined;
+  public cats: BehaviorSubject<Content[]> = new BehaviorSubject<Content[]>([]);
+  public contentType = "Cats"
 
   ngOnInit(): void {
     this.data.cat.subscribe({
       next : (val)=>{
-        this.cats = val
+        this.cats.next(val)
       }
     })
   }
