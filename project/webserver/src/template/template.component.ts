@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, Output, EventEmitter } from '@angular/core';
 import { Content } from '../app/personal/service/userdata.service';
 import { BehaviorSubject } from 'rxjs';
 import { CommonModule } from '@angular/common';
@@ -25,6 +25,9 @@ export class TemplateComponent implements OnInit {
   @Input() data: BehaviorSubject<Content[]> = new BehaviorSubject<Content[]>([]); 
   @Input() contentType: string | undefined = undefined
 
+  @Output() content_data = new EventEmitter<Content>()
+
+
   public userData:Content[] = []
 
 
@@ -35,5 +38,12 @@ export class TemplateComponent implements OnInit {
     );
     
   }
+
+  public addItem = (item: Content): void => {
+    this.content_data.emit(item);
+  };
+
+  
+  
 
 }

@@ -22,4 +22,9 @@ export class ResumeComponent implements OnInit {
     })
   }
 
+  public handleme = ($event:Content)=>{
+    console.log($event)
+
+  }
+
 }

@@ -3,7 +3,7 @@
       <mat-card-title>{{ contentType }}</mat-card-title>
       <mat-divider></mat-divider>
       <div *ngFor="let item of userData">
-        <mat-card class="profile-card">
+        <mat-card (click)="addItem(item)" class="profile-card">
           <!-- Render header only if name is defined -->
           <mat-card-header>
             <mat-card-title *ngIf="item.name !== undefined">{{ item.name }}</mat-card-title>
