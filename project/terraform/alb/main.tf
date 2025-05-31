@@ -29,8 +29,8 @@ resource "aws_lb" "alb" {
 
 resource "aws_lb_target_group" "this" {
   name        = "${var.name}-target-group"
-  port        = 80
-  protocol    = "HTTP"
+  port        = 443
+  protocol    = "HTTPS"
   target_type = "ip"
   vpc_id      = var.vpc_id
 
@@ -40,7 +40,7 @@ resource "aws_lb_target_group" "this" {
     unhealthy_threshold = 3
     interval            = 30
     path                = "/"
-    protocol            = "HTTP"
+    protocol            = "HTTPS"
     matcher             = "200"
   }
 

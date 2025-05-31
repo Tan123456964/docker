@@ -57,3 +57,8 @@ for table in $tables; do
     docker exec mysqlserver mysql -uappuser -papppassword -D onlinestore -e "SELECT * FROM \`$table\`;"
 done
 
+
+
+
+
+awsvpc network, you need to use "localhost" 

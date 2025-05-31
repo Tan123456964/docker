@@ -36,7 +36,7 @@ COPY --from=build /etc/nginx/ssl /etc/nginx/ssl
 COPY --from=build /usr/src/webserver/nginx/conf/nginx.conf /etc/nginx/nginx.conf
 
 # Expose port 8080 for HTTPS
-EXPOSE 8080
+EXPOSE 443
 
 CMD ["nginx", "-g", "daemon off;"]
 

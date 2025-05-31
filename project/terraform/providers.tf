@@ -6,10 +6,10 @@ terraform {
     }
   }
   backend "s3" {
-    key = "personal-project/terraform.tfstate"
-    bucket = "one-cool-thing"
+    key            = "personal-project/terraform.tfstate"
+    bucket         = "one-cool-thing"
     dynamodb_table = "terraform-lock-table"
-    region = "us-east-1"
+    region         = "us-east-1"
   }
 }
 

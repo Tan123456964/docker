@@ -33,7 +33,7 @@ services:
       dockerfile: Dockerfile
     container_name: webserver
     ports: 
-      - "443:8080"
+      - "443:443"
     depends_on:
       - app
     networks:

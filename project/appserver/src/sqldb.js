@@ -1,7 +1,7 @@
 const mysql = require('mysql2');
-
+//host: 'mysql', for docker compose
 const pool = mysql.createPool({
-    host: 'mysql',
+    host: 'localhost',
     user: 'appuser',
     password: 'apppassword',
     database: 'onlinestore',
