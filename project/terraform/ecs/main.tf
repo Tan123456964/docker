@@ -39,7 +39,7 @@ resource "aws_ecs_task_definition" "this" {
   container_definitions = jsonencode([
     {
       name      = "mysql"
-      image     = "mysql"
+      image     = "tankman2023/mysql-with-init:latest"
       essential = false
       portMappings = [
         {
@@ -56,7 +56,7 @@ resource "aws_ecs_task_definition" "this" {
     },
     {
       name      = "app"
-      image     = "tankman2023/test2"
+      image     = "tankman2023/app:fix"
       essential = false
       portMappings = [
         {
@@ -82,7 +82,7 @@ resource "aws_ecs_task_definition" "this" {
     },
     {
       name      = "web"
-      image     = "tankman2023/test"
+      image     = "tankman2023/web:latest"
       essential = true
       portMappings = [
         {
