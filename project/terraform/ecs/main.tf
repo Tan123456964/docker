@@ -33,7 +33,7 @@ resource "aws_ecs_task_definition" "this" {
 
   runtime_platform {
     operating_system_family = "LINUX"
-    cpu_architecture = "ARM64"
+    cpu_architecture        = "ARM64"
   }
 
   container_definitions = jsonencode([
@@ -49,9 +49,9 @@ resource "aws_ecs_task_definition" "this" {
       ],
       environment = [
         { name = "MYSQL_ROOT_PASSWORD", value = "rootpassword" },
-        { name = "MYSQL_DATABASE",      value = "onlinestore" },
-        { name = "MYSQL_USER",          value = "appuser" },
-        { name = "MYSQL_PASSWORD",      value = "apppassword" }
+        { name = "MYSQL_DATABASE", value = "onlinestore" },
+        { name = "MYSQL_USER", value = "appuser" },
+        { name = "MYSQL_PASSWORD", value = "apppassword" }
       ]
     },
     {
@@ -153,9 +153,9 @@ resource "aws_ecs_service" "this" {
   # desired_count   = 2
 
   network_configuration {
-    subnets          = var.ecs_subnet_ids
-    security_groups  = [var.ecs-sg-id]
-    assign_public_ip = true
+    subnets         = var.ecs_subnet_ids
+    security_groups = [var.ecs-sg-id]
+    # assign_public_ip = true
   }
 
   load_balancer {

@@ -3,17 +3,22 @@ output "vpc_id" {
   value       = aws_vpc.this.id
 }
 
-output "subnet_ids" {
-  description = "List of all created subnet IDs"
-  value       = [for subnet in aws_subnet.this : subnet.id]
+output "public_subnet_ids" {
+  description = "List of all created public subnet IDs"
+  value       = [for subnet in aws_subnet.public : subnet.id]
+}
+
+output "private_subnet_ids" {
+  description = "List of all created public subnet IDs"
+  value       = [for subnet in aws_subnet.private : subnet.id]
 }
 
 output "alb-sg-id" {
-    description = "SG for ALB"
-    value = aws_security_group.elb.id
+  description = "SG for ALB"
+  value       = aws_security_group.elb.id
 }
 
 output "esc-sg-id" {
-    description = "SG for ALB"
-    value = aws_security_group.ecs_service.id
+  description = "SG for ALB"
+  value       = aws_security_group.ecs_service.id
 }

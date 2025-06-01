@@ -6,7 +6,7 @@ variable "ecs_cluster_name" {
 
 variable "ecs_subnet_ids" {
   type        = list(string)
-  description = "public facing subnets"
+  description = "private subnets subnets"
 }
 
 variable "ecs-sg-id" {
