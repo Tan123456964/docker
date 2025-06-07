@@ -74,15 +74,7 @@ resource "aws_ecs_task_definition" "this" {
           containerName = "app"
           condition     = "START"
         }
-      ],
-      logConfiguration = {
-        logDriver = "awslogs"
-        options = {
-          awslogs-group         = "${aws_cloudwatch_log_group.ecs_logs.name}"
-          awslogs-region        = "us-east-1"
-          awslogs-stream-prefix = "web"
-        }
-      }
+      ]
     }
   ])
 }
@@ -128,6 +120,7 @@ resource "aws_ecs_service" "this" {
   task_definition = aws_ecs_task_definition.this.arn
   launch_type     = "FARGATE"
   # desired_count   = 2
+  force_new_deployment = true
 
   network_configuration {
     subnets         = var.ecs_subnet_ids
