@@ -18,3 +18,13 @@ variable "alb_target_group_arn" {
   type        = string
   description = "alb name"
 }
+
+variable "environment" {
+  description = "List of environment variables for database"
+  type = list(object({
+    name  = string
+    value = string
+  }))
+  sensitive = true
+}
+

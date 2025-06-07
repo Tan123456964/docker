@@ -30,6 +30,7 @@ resource "aws_ecs_task_definition" "this" {
   cpu                      = "1024"
   memory                   = "2048"
   execution_role_arn       = aws_iam_role.task-role.arn
+  
 
   runtime_platform {
     operating_system_family = "LINUX"
@@ -38,25 +39,8 @@ resource "aws_ecs_task_definition" "this" {
 
   container_definitions = jsonencode([
     {
-      name      = "mysql"
-      image     = "tankman2023/mysql-with-init:latest"
-      essential = false
-      portMappings = [
-        {
-          containerPort = 3306
-          protocol      = "tcp"
-        }
-      ],
-      environment = [
-        { name = "MYSQL_ROOT_PASSWORD", value = "rootpassword" },
-        { name = "MYSQL_DATABASE", value = "onlinestore" },
-        { name = "MYSQL_USER", value = "appuser" },
-        { name = "MYSQL_PASSWORD", value = "apppassword" }
-      ]
-    },
-    {
       name      = "app"
-      image     = "tankman2023/app:fix"
+      image     = "tankman2023/app:fix-latest4"
       essential = false
       portMappings = [
         {
@@ -64,13 +48,8 @@ resource "aws_ecs_task_definition" "this" {
           protocol      = "tcp"
         }
       ],
-      command = ["npm", "run", "start"],
-      dependsOn = [
-        {
-          containerName = "mysql"
-          condition     = "START"
-        }
-      ],
+      environment = var.environment,
+      command     = ["npm", "run", "start"],
       logConfiguration = {
         logDriver = "awslogs"
         options = {

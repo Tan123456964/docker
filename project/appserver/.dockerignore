@@ -5,4 +5,4 @@
 # https://docs.docker.com/go/build-context-dockerignore/
 
 node_modules
-Dockerfile
+

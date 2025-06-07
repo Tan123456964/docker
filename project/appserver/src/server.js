@@ -1,60 +1,86 @@
 const express = require('express');
-const pool = require('./sqldb');
+const getConnection = require('./sqldb');
+const logger = require('./logger');
 
 const app = express();
 const PORT = 3000;
 
-// API for fetching cat pictures
-app.get('/api/cat', async (req, res) => {
-    const query = 'SELECT * FROM cat';
-    try {
-        const [results] = await pool.query(query);
-        res.json(results);
-    } catch (error) {
-        console.error('Error fetching cat data:', error);
-        res.status(500).send('Server error');
+app.get('/api/cat', (req, res) => {
+  const connection = getConnection();
+  const query = 'SELECT * FROM project.cat';
+
+  logger.info({ message: `Executing query: ${query}` });
+
+  connection.query(query, (err, result) => {
+    if (err) {
+      logger.error({ message: `Query failed: ${err.message}` });
+      connection.destroy();
+      return res.status(500).send('Server error');
     }
+
+    logger.info({ message: 'Query successful: /api/cat' });
+    res.json(result);
+    connection.destroy();
+  });
 });
 
-// API for fetching profile info
-app.get('/api/profile', async (req, res) => {
-    const query = 'SELECT * FROM profile';
-    try {
-        const [results] = await pool.query(query);
-        res.json(results);
-    } catch (error) {
-        console.error('Error fetching profile data:', error);
-        res.status(500).send('Server error');
+app.get('/api/profile', (req, res) => {
+  const connection = getConnection();
+  const query = 'SELECT * FROM project.profile';
+
+  logger.info({ message: `Executing query: ${query}` });
+
+  connection.query(query, (err, result) => {
+    if (err) {
+      logger.error({ message: `Query failed: ${err.message}` });
+      connection.destroy();
+      return res.status(500).send('Server error');
     }
+
+    logger.info({ message: 'Query successful: /api/profile' });
+    res.json(result);
+    connection.destroy();
+  });
 });
 
-// API for fetching resumes
-app.get('/api/resume', async (req, res) => {
-    const query = 'SELECT * FROM resume';
-    try {
-        const [results] = await pool.query(query);
-        res.json(results);
-    } catch (error) {
-        console.error('Error fetching resume data:', error);
-        res.status(500).send('Server error');
+app.get('/api/resume', (req, res) => {
+  const connection = getConnection();
+  const query = 'SELECT * FROM project.resume';
+
+  logger.info({ message: `Executing query: ${query}` });
+
+  connection.query(query, (err, result) => {
+    if (err) {
+      logger.error({ message: `Query failed: ${err.message}` });
+      connection.destroy();
+      return res.status(500).send('Server error');
     }
+
+    logger.info({ message: 'Query successful: /api/resume' });
+    res.json(result);
+    connection.destroy();
+  });
 });
 
-// API for fetching achievements
-app.get('/api/achievement', async (req, res) => {
-    const query = 'SELECT * FROM achievement';
-    try {
-        const [results] = await pool.query(query);
-        res.json(results);
-    } catch (error) {
-        console.error('Error fetching achievement data:', error);
-        res.status(500).send('Server error');
+app.get('/api/achievement', (req, res) => {
+  const connection = getConnection();
+  const query = 'SELECT * FROM project.achievement';
+
+  logger.info({ message: `Executing query: ${query}` });
+
+  connection.query(query, (err, result) => {
+    if (err) {
+      logger.error({ message: `Query failed: ${err.message}` });
+      connection.destroy();
+      return res.status(500).send('Server error');
     }
+
+    logger.info({ message: 'Query successful: /api/achievement' });
+    res.json(result);
+    connection.destroy();
+  });
 });
 
-
-//////////
-// Start the server
 app.listen(PORT, () => {
-    console.log(`Server is running on http://localhost:${PORT}`);
+  logger.info({ message: `Server running at http://localhost:${PORT}` });
 });

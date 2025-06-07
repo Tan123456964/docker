@@ -4,7 +4,7 @@ services:
     image: mysql:latest
     environment:
       MYSQL_ROOT_PASSWORD: rootpassword
-      MYSQL_DATABASE: onlinestore
+      MYSQL_DATABASE: project
       MYSQL_USER: appuser
       MYSQL_PASSWORD: apppassword
     container_name: mysqlserver  
@@ -19,6 +19,12 @@ services:
       context: ./appserver/
       dockerfile: Dockerfile
     container_name: appserver
+    environment:
+      DB_HOST: mysql
+      DB_USER: appuser
+      DB_PASSWORD: apppassword
+      DB_NAME: project
+      DB_PORT: 3306
     volumes:
       - ./appserver:/usr/src/appserver
       - /usr/src/appserver/node_modules # Prevents overwriting the container's node_modules

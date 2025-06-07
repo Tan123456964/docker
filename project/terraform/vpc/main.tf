@@ -1,5 +1,7 @@
 resource "aws_vpc" "this" {
-  cidr_block = var.vpc_cidr
+  cidr_block           = var.vpc_cidr
+  enable_dns_support   = true
+  enable_dns_hostnames = true
   tags = {
     Name = var.vpc_name
   }
@@ -144,5 +146,89 @@ resource "aws_security_group" "ecs_service" {
   }
 }
 
+data "http" "my_ip" {
+  url = "https://checkip.amazonaws.com"
+}
+
+resource "aws_security_group" "ec2_sg" {
+  name        = "${var.vpc_name}-admin-instance-sg"
+  description = "Allow SSH and RDS access"
+  vpc_id      = aws_vpc.this.id
+
+  ingress {
+    description = "Allow SSH from your IP"
+    from_port   = 22
+    to_port     = 22
+    protocol    = "tcp"
+    cidr_blocks = ["${chomp(data.http.my_ip.response_body)}/32"]
+  }
+
+  egress {
+    from_port   = 0
+    to_port     = 0
+    protocol    = "-1"
+    cidr_blocks = ["0.0.0.0/0"]
+  }
+
+  tags = {
+    Name = "${var.vpc_name}-ec2-sg"
+  }
+}
+
+
+resource "aws_security_group" "rds_sg" {
+  name        = "${var.vpc_name}-rds-sg"
+  description = "Allow traffic from Admin ec2 instance and ecs task"
+  vpc_id      = aws_vpc.this.id
+
+  ingress {
+    description     = "Allow from ALB SG on HTTP"
+    from_port       = 3306
+    to_port         = 3306
+    protocol        = "tcp"
+    security_groups = [aws_security_group.ecs_service.id, aws_security_group.ec2_sg.id] 
+  }
+
+
+  # egress {
+  #   description = "Allow all outbound traffic"
+  #   from_port   = 0
+  #   to_port     = 0
+  #   protocol    = "-1"
+  #   cidr_blocks = ["0.0.0.0/0"]
+  # }
+
+  tags = {
+    Name = "${var.vpc_name}-ecs-service-sg"
+  }
+}
+
+# resource "aws_security_group" "rds_sg" {
+#   name        = "${var.vpc_name}-rds-sg"
+#   description = "Allow traffic my IP and ecs task"
+#   vpc_id      = aws_vpc.this.id
+
+#   tags = {
+#     Name = "${var.vpc_name}-ecs-service-sg"
+#   }
+# }
+
+# resource "aws_security_group_rule" "mysql_ingress" {
+#   from_port                = 3306
+#   to_port                  = 3306
+#   protocol                 = "tcp"
+#   security_group_id        = aws_security_group.rds_sg.id
+#   cidr_blocks              = [aws_vpc.this.cidr_block]
+#   type                     = "ingress"
+# }
+
+# resource "aws_security_group_rule" "mysql_egress" {
+#   cidr_blocks       = [aws_vpc.this.cidr_block]
+#   from_port         = 0
+#   protocol          = "-1"
+#   security_group_id = aws_security_group.rds_sg.id
+#   to_port           = 0
+#   type              = "egress"
+# }
 
 

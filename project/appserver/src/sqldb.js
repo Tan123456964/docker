@@ -1,14 +1,25 @@
 const mysql = require('mysql2');
-//host: 'mysql', for docker compose
-const pool = mysql.createPool({
-    host: 'localhost',
-    user: 'appuser',
-    password: 'apppassword',
-    database: 'onlinestore',
-    port: 3306,
-    waitForConnections: true,
-    connectionLimit: 4, // Maximum number of connections in the pool
-    queueLimit: 0 // Unlimited queue limit for pending requests
-});
+const logger = require('./logger');
 
-module.exports = pool.promise(); // Use promise-based for async/await support
+function getConnection() {
+
+  const connection = mysql.createConnection({
+    host: process.env.DB_HOST,
+    user: process.env.DB_USER,
+    password: process.env.DB_PASSWORD,
+    database: process.env.DB_NAME,
+    port: process.env.DB_PORT,
+  });
+
+  connection.connect(err => {
+    if (err) {
+      logger.error({ message: `DB connection failed: ${err.stack}` });
+    } else {
+      logger.info({ message: `DB connected: threadId ${connection.threadId}` });
+    }
+  });
+
+  return connection;
+}
+
+module.exports = getConnection;

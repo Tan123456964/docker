@@ -22,3 +22,13 @@ output "esc-sg-id" {
   description = "SG for ALB"
   value       = aws_security_group.ecs_service.id
 }
+
+output "rds-sg-id" {
+  description = "SG for RDS"
+  value       = aws_security_group.rds_sg.id
+}
+
+output "ec2-sg-id" {
+  description = "SG for RDS"
+  value       = aws_security_group.ec2_sg.id
+}
