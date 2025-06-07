@@ -18,7 +18,7 @@ resource "aws_ecs_cluster_capacity_providers" "this" {
 
 
 resource "aws_cloudwatch_log_group" "ecs_logs" {
-  name              = "/ecs/myapp"
+  name              = "/ecs/project"
   retention_in_days = 7
 }
 
@@ -29,7 +29,7 @@ resource "aws_ecs_task_definition" "this" {
   requires_compatibilities = ["FARGATE"]
   cpu                      = "1024"
   memory                   = "2048"
-  execution_role_arn       = aws_iam_role.task-role.arn
+  execution_role_arn       = aws_iam_role.execution-role.arn
   
 
   runtime_platform {
@@ -93,11 +93,9 @@ data "aws_iam_policy" "aws_ecs_task_execution_policy" {
   name = "AmazonECSTaskExecutionRolePolicy"
 }
 
-resource "aws_iam_role" "task-role" {
+resource "aws_iam_role" "execution-role" {
   name = "${var.ecs_cluster_name}-iam-role"
 
-  # Terraform's "jsonencode" function converts a
-  # Terraform expression result to valid JSON syntax.
   assume_role_policy = jsonencode({
     "Version" : "2008-10-17",
     "Statement" : [
@@ -118,7 +116,7 @@ resource "aws_iam_role" "task-role" {
 }
 
 resource "aws_iam_role_policy_attachment" "ecs_task_execution_attachment" {
-  role       = aws_iam_role.task-role.name
+  role       = aws_iam_role.execution-role.name
   policy_arn = data.aws_iam_policy.aws_ecs_task_execution_policy.arn
 }
 

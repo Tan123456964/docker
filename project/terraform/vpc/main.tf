@@ -46,7 +46,7 @@ resource "aws_nat_gateway" "this" {
   subnet_id     = aws_subnet.public[0].id
 
   tags = {
-    Name = "${var.vpc_name}-nat"
+    Name = "${var.vpc_name}-ngw"
   }
 
   # To ensure proper ordering, it is recommended to add an explicit dependency
@@ -63,7 +63,7 @@ resource "aws_route_table" "public" {
   }
 
   tags = {
-    Name = "${var.vpc_name}-rt"
+    Name = "${var.vpc_name}-public-rt"
   }
 }
 
@@ -122,11 +122,11 @@ resource "aws_security_group" "elb" {
 
 resource "aws_security_group" "ecs_service" {
   name        = "${var.vpc_name}-ecs-service-sg"
-  description = "Allow traffic from ALB to ECS service"
+  description = "Allow traffic from ALB to ECS service; and resposne to internet"
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    description     = "Allow from ALB SG on HTTP"
+    description     = "Allow from ALB SG on HTTPS"
     from_port       = 443
     to_port         = 443
     protocol        = "tcp"
@@ -156,7 +156,7 @@ resource "aws_security_group" "ec2_sg" {
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    description = "Allow SSH from your IP"
+    description = "Allow SSH from my IP"
     from_port   = 22
     to_port     = 22
     protocol    = "tcp"
@@ -164,6 +164,7 @@ resource "aws_security_group" "ec2_sg" {
   }
 
   egress {
+    description = "Allows traffic to internet"
     from_port   = 0
     to_port     = 0
     protocol    = "-1"
@@ -182,21 +183,13 @@ resource "aws_security_group" "rds_sg" {
   vpc_id      = aws_vpc.this.id
 
   ingress {
-    description     = "Allow from ALB SG on HTTP"
+    description     = "Allow from Admin ec2 and ecs task"
     from_port       = 3306
     to_port         = 3306
     protocol        = "tcp"
     security_groups = [aws_security_group.ecs_service.id, aws_security_group.ec2_sg.id] 
   }
 
-
-  # egress {
-  #   description = "Allow all outbound traffic"
-  #   from_port   = 0
-  #   to_port     = 0
-  #   protocol    = "-1"
-  #   cidr_blocks = ["0.0.0.0/0"]
-  # }
 
   tags = {
     Name = "${var.vpc_name}-ecs-service-sg"

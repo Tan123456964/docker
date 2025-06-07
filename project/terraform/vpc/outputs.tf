@@ -9,26 +9,26 @@ output "public_subnet_ids" {
 }
 
 output "private_subnet_ids" {
-  description = "List of all created public subnet IDs"
+  description = "List of all created private subnet IDs"
   value       = [for subnet in aws_subnet.private : subnet.id]
 }
 
 output "alb-sg-id" {
-  description = "SG for ALB"
+  description = "ALB sg id"
   value       = aws_security_group.elb.id
 }
 
 output "esc-sg-id" {
-  description = "SG for ALB"
+  description = "ECS sg id"
   value       = aws_security_group.ecs_service.id
 }
 
 output "rds-sg-id" {
-  description = "SG for RDS"
+  description = "RDS sg id"
   value       = aws_security_group.rds_sg.id
 }
 
 output "ec2-sg-id" {
-  description = "SG for RDS"
+  description = "ECS sg id"
   value       = aws_security_group.ec2_sg.id
 }

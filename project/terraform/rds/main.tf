@@ -1,9 +1,9 @@
 resource "aws_db_subnet_group" "this" {
-  name       = "tapon_s_app"
+  name       = "subnetgroup-${var.db_identifier}"
   subnet_ids = var.rds_subnet_ids
 
   tags = {
-    Name = "My DB subnet group"
+    Name = "RDS subnet group"
   }
 }
 
@@ -54,7 +54,7 @@ resource "aws_instance" "rds_init_host" {
               EOF
 
   tags = {
-    Name = "rds-init-host"
+    Name = "admin"
   }
 }
 
