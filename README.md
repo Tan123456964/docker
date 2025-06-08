@@ -1,5 +1,5 @@
 
-# Project Component (WIP)
+# Project Component
 
 > **TL;DR:** Learning Terraform by implementing a full-stack website. Work in progress.
 
