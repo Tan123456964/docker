@@ -119,13 +119,11 @@ resource "aws_ecs_service" "this" {
   cluster         = aws_ecs_cluster.this.id
   task_definition = aws_ecs_task_definition.this.arn
   launch_type     = "FARGATE"
-  # desired_count   = 2
   force_new_deployment = true
 
   network_configuration {
     subnets         = var.ecs_subnet_ids
     security_groups = [var.ecs-sg-id]
-    # assign_public_ip = true
   }
 
   load_balancer {

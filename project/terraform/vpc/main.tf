@@ -196,32 +196,5 @@ resource "aws_security_group" "rds_sg" {
   }
 }
 
-# resource "aws_security_group" "rds_sg" {
-#   name        = "${var.vpc_name}-rds-sg"
-#   description = "Allow traffic my IP and ecs task"
-#   vpc_id      = aws_vpc.this.id
-
-#   tags = {
-#     Name = "${var.vpc_name}-ecs-service-sg"
-#   }
-# }
-
-# resource "aws_security_group_rule" "mysql_ingress" {
-#   from_port                = 3306
-#   to_port                  = 3306
-#   protocol                 = "tcp"
-#   security_group_id        = aws_security_group.rds_sg.id
-#   cidr_blocks              = [aws_vpc.this.cidr_block]
-#   type                     = "ingress"
-# }
-
-# resource "aws_security_group_rule" "mysql_egress" {
-#   cidr_blocks       = [aws_vpc.this.cidr_block]
-#   from_port         = 0
-#   protocol          = "-1"
-#   security_group_id = aws_security_group.rds_sg.id
-#   to_port           = 0
-#   type              = "egress"
-# }
 
 

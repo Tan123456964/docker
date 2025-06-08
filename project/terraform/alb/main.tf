@@ -22,7 +22,7 @@ resource "aws_lb" "alb" {
   }
 
   tags = {
-    Environment = "production"
+    Environment = "dev"
   }
 }
 

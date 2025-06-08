@@ -53,7 +53,7 @@ module "ecs-module" {
   ecs-sg-id            = module.vpc-module.esc-sg-id
   alb_target_group_arn = module.elb-module.alb_tgc_arn
   environment = [
-    { name = "DB_HOST", value = module.rds-module.rds_endpoint },
+    { name = "DB_HOST", value = module.rds-module.rds_address },
     { name = "DB_USER", value = data.aws_ssm_parameter.db_user.value },
     { name = "DB_PASSWORD", value = data.aws_ssm_parameter.db_password.value },
     { name = "DB_NAME", value = data.aws_ssm_parameter.db_name.value },

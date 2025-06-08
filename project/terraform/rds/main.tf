@@ -35,9 +35,6 @@ resource "aws_db_instance" "dev_db" {
 
 
 # creating admin instance to initalize DB
-# ssh to this instance and update DB
-# run this command : mysql -h <rds-endpoint> -u <username> -p<password> <dbname> < init.sql
-
 resource "aws_instance" "rds_init_host" {
   ami                    = "ami-02457590d33d576c3"
   instance_type          = "t2.micro"
