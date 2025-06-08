@@ -1,7 +1,7 @@
 
 # Project Component (WIP)
 
-> **TL;DR:** Learning Terraform by implementing a full-stack website
+> **TL;DR:** Learning Terraform by implementing a full-stack website. Work in progress.
 
 1. **appserver**  
 2. **webserver**  
