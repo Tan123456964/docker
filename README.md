@@ -1,26 +1,57 @@
 
-#1 build and run docker images 
+# Project Component (WIP)
+
+> **TL;DR:** Learning Terraform by implementing a full-stack website
+
+1. **appserver**  
+2. **webserver**  
+3. **MySQL container** and `init.sql`  
+4. **Terraform IaC**
+   - **VPC**: NAT Gateway, public and private subnets, route tables, security groups  
+   - **RDS Instance**: Single-AZ MySQL  
+   - **EC2 instance**: Used to initialize RDS DB  
+   - **ALB**: Internet-facing Application Load Balancer  
+   - **ECS Fargate Deployment**  
+   - **Route 53**
+5. **Docker**: Building images and running the website locally  
+   - `compose.yml`  
+   - `Dockerfile`
+6. **GitHub**: Source code management
+
+# Build and Run Docker Images
+
 ```bash
 docker compose up --build
+# Access the app:
 # URL: https://localhost:443 or https://localhost
 ```
-#2 run init.sql in ec2 admin instance 
+
+# Run init.sql in ec2 admin instance 
 
 ```bash
-# once you have ec2 instance and rds running, ssh to admin instance, copy over init.sql and run this file against RDS
+# Once EC2 and RDS are running, SSH into the admin instance:
+ssh -i <your-key.pem> ec2-user@<your-ec2-public-ip-or-dns>
 
-# ssh to admin instance 
-ssh -i secreat.pem ec2-user@ec2-44-212-71-218.compute-1.amazonaws.com
-# open init.sql file with vim and copy and paste content of init.sql 
-vim init.sql 
-# initilize rds 
+# Open init.sql with vim and paste the content if not already copied:
+vim init.sql
+
+# Initialize RDS:
 mysql -h <rds-domain-name> -u <user> -p'<password>' < init.sql
 
-# verfiy db is initilaized 
+# Verify DB is initialized:
 mysql -h <rds-domain-name> -u <user> -p'<password>'
 show databases;
 use project;
 show tables;
 select * from cat;
 
+```
+# Upload docker image to docker egistry
+```bash
+# Log in to Docker Hub
+docker login
+# Tag the Docker image
+docker tag <local-image-name>:<local-tag> <dockerhub-username>/<repository-name>:<target-tag>
+# Push the image
+docker push <dockerhub-username>/<repository-name>:<target-tag>
 ```
